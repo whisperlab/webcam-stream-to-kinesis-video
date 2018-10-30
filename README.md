@@ -29,6 +29,7 @@ AWS Technologies used:
   ./deploy.sh
   ```
 
+4. At this time (10/30/2018), CloudFormation does not support Kinesis Video Streams. Therefore, you must manually create a stream using the AWS web console, CLI, or API with a name that matches the KVSStreamName parameter in template.yaml. 
 
 ## Components
 
