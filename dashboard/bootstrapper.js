@@ -61,13 +61,19 @@ function deleteBucket(bucket) {
             }, function(err, data) {
                 if (err && objects.length > 0) return resolve(err);
                 console.log(`Deleted ${bucket} bucket objects.`);
-                s3.deleteBucket({
-                    Bucket: bucket
-                }, function(err, data) {
-                    if (err) return resolve(err);
-                    console.log(`Deleted ${bucket} bucket.`);
-                    resolve(data);
-                });
+                
+                // only delete S3 web app bucket if a new bucket was created when this
+                // project was launched. If an existing bucket was used, do *not* delete
+                // the existing bucket. Delete any other bucket specified. 
+                if ((bucket !== process.env.WEBAPP_BUCKET_NAME) || (bucket === process.env.WEBAPP_BUCKET_NAME && process.env.S3_WEB_APP_BUCKET_ACTION === "create_new")) {
+                  s3.deleteBucket({
+                      Bucket: bucket
+                  }, function(err, data) {
+                      if (err) return resolve(err);
+                      console.log(`Deleted ${bucket} bucket.`);
+                      resolve(data);
+                  });
+                }
             });
         });
     });
