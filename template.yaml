@@ -29,7 +29,7 @@ Parameters:
             host our web app front end. If S3WebAppBucketAction is "use_existing", this value should match the name of an existing
             S3 bucket configured as a public facing website to which the web frontend app will be uploaded.
     AllowedValues: ["create_new", "use_existing"]
-    Default: "create_new"
+    Default: "use_existing"
   
   WebAppBucketName:
     Type: String
@@ -102,7 +102,7 @@ Resources:
     Type: AWS::S3::Bucket
     Description: Bucket that hosts static content of web app
     DeletionPolicy: Retain
-    Condition: BootstrapWebApp
+    Condition: CreateWebAppBucket
     Properties:
       AccessControl: PublicRead
       WebsiteConfiguration:
@@ -111,9 +111,9 @@ Resources:
 
   WebsiteBucketPolicy:
     Type: AWS::S3::BucketPolicy
+    Condition: CreateWebAppBucket
     Properties:
       Bucket: !Ref WebAppBucket
-      Condition: BootstrapWebApp
       PolicyDocument:
         Id: BPFidgetologyWebAppPolicy
         Version: '2012-10-17'
@@ -122,7 +122,7 @@ Resources:
             Effect: Allow
             Principal: '*'
             Action: 's3:GetObject'
-            Resource: !Sub "arn:aws:s3:::${WebAppBucket}/*"
+            Resource: !Sub "arn:aws:s3:::${WebAppBucketName}/*"
 
   WebAppBootstrapperLambda:
     Type: AWS::Serverless::Function
@@ -173,7 +173,6 @@ Resources:
       ServiceToken: !Sub "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:${ApplicationName}-WebAppBootstrapper"
     DependsOn: 
       - UploadsBucket
-      - WebAppBucket
       - WebAppBootstrapperLambda
 
   ####### Serverless Lambda Functions #######

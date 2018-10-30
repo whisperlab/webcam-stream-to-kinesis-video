@@ -2,7 +2,7 @@
 
 ## Overview
 
-This is a serverless web application for streaming webcam feed from a browser to [Amazon Kinesis Video Streams](https://console.aws.amazon.com/kinesisvideo) and [Amazon Rekognition Video](https://docs.aws.amazon.com/rekognition/latest/dg/streaming-video.html).
+This is a serverless web application for streaming webcam feed from a browser to [Amazon Kinesis Video Streams](https://console.aws.amazon.com/kinesisvideo).
 
 This project was primarily adapted from: https://github.com/brain-power/Brain-Power-Amazon-Fidgetology
 

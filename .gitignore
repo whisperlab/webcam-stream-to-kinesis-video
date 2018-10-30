@@ -3,6 +3,7 @@ dashboard/js/app/config.js
 deploy.sh
 master-template.yaml
 packaged-template_lite.yaml
+packaged-template.yaml
 *.log
 tmp/
 .idea/
