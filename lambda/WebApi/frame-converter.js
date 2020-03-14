@@ -21,7 +21,7 @@ exports.convertFramesToMKVFragment = function(frameDataArray, params) {
         }).map((frameData, index) => {
             // Strip off the data:url prefix to get just the base64-encoded bytes.
             var data = frameData.replace(/^data:image\/\w+;base64,/, "");
-            var buf = new Buffer(data, 'base64');
+            var buf = Buffer.from(data, 'base64');
             return new Promise(function(resolve, reject) {
                 // For padding filenames of image frames
                 var pad = function(number, size) {
