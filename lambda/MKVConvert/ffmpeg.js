@@ -33,7 +33,8 @@ var os = require('os'),
   unzip = function (targetPath) {
     'use strict';
     console.log("Unzipping binary...");
-    var unzipCmd = 'cat ' + path.join(__dirname, 'vendor', 'ffmpeg.gz') + ' | gzip -d  > ' + targetPath;
+    //var unzipCmd = 'cat ' + path.join(__dirname, 'vendor', 'ffmpeg.gz') + ' | gzip -d  > ' + targetPath;
+    var unzipCmd = 'cat ' + path.join(__dirname, 'vendor', 'ffmpeg') + ' > ' + targetPath;
     console.log(unzipCmd);
     return cp.exec(unzipCmd).then(function () {
       return makeExecutable(targetPath);
